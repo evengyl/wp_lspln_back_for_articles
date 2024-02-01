@@ -52,12 +52,57 @@ export class Wordpress{
 
     async getOnePost(id){
         try {
-            const response = await axios.get(`${this.url}/wp-json/wp/v2/posts/${id}`);
+            const response = await axios.get(`${this.url}/wp-json/wp/v2/posts/${id}`,
+            { headers: this.headers });
+
             console.log(response.data._links.self)
             return response.data
+
         } catch (error) {
             console.log(error)
             throw new Error(`Error while get one post: ${error}`);
+        }
+    }
+
+
+    async getAllBlockCompo()
+    {
+        try {
+            const response = await axios.get(`${this.url}/wp-json/wp/v2/blocks`,
+            { headers: this.headers });
+
+            return response.data
+
+        } catch (error) {
+            console.log(error)
+            throw new Error(`Error while get al block composition: ${error}`);
+        }
+    }
+
+
+    async getBlockArticleV3Compo(id)
+    {
+        try {
+            const response = await axios.get(`${this.url}/wp-json/wp/v2/blocks/${id}`,
+            { headers: this.headers });
+
+            return response.data
+
+        } catch (error) {
+            console.log(error)
+            throw new Error(`Error while get al block composition: ${error}`);
+        }
+    }
+
+    async getAllPost(){
+        try {
+            const response = await axios.get(`${this.url}/wp-json/wp/v2/posts?per_page=1`);
+            console.log(response.data)
+            
+            return response.data
+        } catch (error) {
+            console.log(error)
+            throw new Error(`Error while get all post: ${error}`);
         }
     }
 
