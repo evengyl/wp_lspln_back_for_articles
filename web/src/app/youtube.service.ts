@@ -1,20 +1,28 @@
+import { Injectable } from "@angular/core";
 import axios from "axios";
-import * as fs from 'fs';
-import * as path from 'path';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class YoutubeService {
 
 
-export class YouTubeParser
-{
-    async getAllHtmlVideo(url)
+    channelName : string = ""
+    nameVideo : string = ""
+    listKeyWords : string = ""
+    idVideo : string = ""
+    description : string = ""
+    imageThumbnail : string = ""
+
+    async getAllHtmlVideo(url : any)
     {
 
         try {
 
-            const URL = url
 
-            const response = await axios.get(URL)
-            //console.log(response.data)
-            
+            const response = await axios.get("https://cors-anywhere.herokuapp.com/"+ url, {
+                headers : {   'Access-Control-Allow-Origin': '*' }
+            })
             let parsing = response.data
 
 
@@ -26,6 +34,8 @@ export class YouTubeParser
 
             if (match)
                 channelName = match[1]
+
+            this.channelName = channelName
             //#########################################################################
 
 
@@ -36,16 +46,20 @@ export class YouTubeParser
 
             if (match)
                 nameVideo = new String(match[1]).replace(" - YouTube", "")
+
+            this.nameVideo = nameVideo
             //#########################################################################
 
 
             //#########################################################################
-            let listKeyWords = ""
+            let listKeyWords = []
             regex = /<meta\s+name="keywords"\s+content="([^"]*)"/i;
             match = parsing.match(regex);
 
             if(match)
-                listKeyWords = match[1].split(',').map(keyword => keyword.trim());
+                listKeyWords = match[1].split(',').map((keyword : any) => keyword.trim());
+
+            this.listKeyWords = listKeyWords.join(", ")
             //#########################################################################
 
 
@@ -60,6 +74,7 @@ export class YouTubeParser
             description = description.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, ''); // Supprimer tous les caractères de contrôle
             description = description.replace(/\\n/g, '<br>'); // Remplacer les sauts de ligne par <br>
 
+            this.description = description
             //#########################################################################
 
 
@@ -67,17 +82,26 @@ export class YouTubeParser
             //#########################################################################
             let idVideo = ""
             regex = /(?:\?|&)v=([^&]+)/i;
-            match = URL.match(regex);
+            match = url.match(regex);
 
             if(match)
                 idVideo = match[1]
+
+            this.idVideo = idVideo
             //#########################################################################
 
-            fs.writeFileSync(path.join("", "./datasYoutube/channelName"), channelName)
-            fs.writeFileSync(path.join("", "./datasYoutube/nameVideo"), nameVideo)
-            fs.writeFileSync(path.join("", "./datasYoutube/listKeyWords"), listKeyWords.join(", "))
-            fs.writeFileSync(path.join("", "./datasYoutube/idVideo"), idVideo)
-            fs.writeFileSync(path.join("", "./datasYoutube/description"), description)
+
+            //#########################################################################
+            let thumbnailImage = ""
+            //regex = /<link\s+as="image"\s+rel="preload"\s+href="([^"]+)"\s*\/?>/i;
+            regex = /<link\s+as="image"\s+rel="preload"\s+href="([^"]+)"/g;
+            match = parsing.match(regex)
+            regex = /href="([^"]+)"/;
+            thumbnailImage = match[0].match(regex)[1];
+            this.imageThumbnail = thumbnailImage
+            //#########################################################################
+
+
 
         } catch (error) {
             console.log(error)
@@ -88,5 +112,5 @@ export class YouTubeParser
     }
 
 
-    
+      
 }

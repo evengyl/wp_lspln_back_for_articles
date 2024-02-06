@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as fs from 'fs';
+import * as path from 'path';
 
 
 export class Wordpress{
@@ -34,14 +35,46 @@ export class Wordpress{
         }
     }
 
+    async createTagsKeyWord(stringTagBrut){
+        let newArrayTagForWP = stringTagBrut.split(',').map(tag => ({ name: tag.trim() }));
+        let arrayIdKeyTags = []
+        try {
+            newArrayTagForWP.forEach(async (tag) => {
+
+                let response = await axios.post(`${this.url}/wp-json/wp/v2/tags`, 
+                    tag, 
+                    { headers: this.headers }
+                ).catch((err) => {
+                })
+
+                if(response != undefined)
+                    arrayIdKeyTags.push(response.data.id)
+            })
+
+            return arrayIdKeyTags
+        } catch (error) {
+            throw new Error(`Error while updating post: ${error}`);
+        }
+    }
+
+    async updatePost(idPost, post)
+    {
+        try {
+            const response = await axios.post(`${this.url}/wp-json/wp/v2/posts/${idPost}`, 
+                post, 
+                { headers: this.headers }
+            );
+            return response.data;
+        } catch (error) {
+            console.log(error)
+            throw new Error(`Error while updating post: ${error}`);
+        }
+    }
+
     async getAllCateg()
     {
         try {
             const response = await axios.get(`${this.url}/wp-json/wp/v2/categories?hide_empty=false&per_page=100`);
-            for(const category of response.data)
-            {
-                console.log(category.name)
-            }
             return response.data
         } catch (error) {
             console.log(error)
@@ -55,7 +88,6 @@ export class Wordpress{
             const response = await axios.get(`${this.url}/wp-json/wp/v2/posts/${id}`,
             { headers: this.headers });
 
-            console.log(response.data._links.self)
             return response.data
 
         } catch (error) {
@@ -97,7 +129,6 @@ export class Wordpress{
     async getAllPost(){
         try {
             const response = await axios.get(`${this.url}/wp-json/wp/v2/posts?per_page=1`);
-            console.log(response.data)
             
             return response.data
         } catch (error) {
@@ -113,13 +144,6 @@ export class Wordpress{
             const response = await axios.get(`${this.url}/wp-json/wp/v2/block-renderer?name=Articles Vidéos Beta 2.0`,
                 { headers: this.headers }
             );
-
-            console.log(response)
-            for(const category of response.data)
-            {
-                console.log(category)
-            }
-
 
             return response.data
         } catch (error) {

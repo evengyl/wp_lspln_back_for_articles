@@ -1,0 +1,138 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col s12">
+			<div class="card blue-grey darken-1">
+				<div class="card-content white-text">
+					<span class="card-title">Infos Complète à trier de youtube</span>
+					<div class="row">
+						<button (click)="initAllDatas_YT_AND_WP()" class="btn waves-effect waves-light green">Charger Toutes les données de YT et WP</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col s6">
+			<div class="row">
+
+				<div class="col s12">
+					<div class="card blue-grey darken-1">
+						<div class="card-content white-text">
+							<span class="card-title">WORDPRESS</span>
+							<div>
+								<div style="padding:15px 15px;">
+									<p>Liste des catégories : </p>
+									<span style="padding:15px;" *ngFor="let categ of listCateg">
+										<label>
+											<input (change)="toggleSelection(categ.id)" [value]="categ.id" type="checkbox" />
+											<span>{{ categ.name }}</span>
+										</label>
+									</span>
+								</div>
+
+								<div style="padding:15px 15px;">
+									<p>Liste des mots clés ajoutés dans l'article : </p>
+									<span style="padding:15px;" *ngFor="let tag of listTagAdded">
+										{{ tag.name }}
+									</span>
+								</div>
+
+								
+								<div style="padding:15px 15px;">
+									<p>Titre de l'article : </p>
+									<span style="padding:15px;">
+										{{ nameVideo }}
+									</span>
+								</div>
+
+								<div style="padding:15px 15px;">
+									<p>Slug url de l'article : </p>
+									<span style="padding:15px;">
+										{{ this.slug}}
+									</span>
+								</div>
+
+								<div style="padding:15px 15px;">
+									<p>Résumé de l'article : </p>
+									<span style="padding:15px;">
+										<input [(ngModel)]="resumeVideo" placeholder="Résumé de la vidéo" type="text" class="validate">
+									</span>
+								</div>
+
+
+								<div style="padding:15px 15px;">
+									<p>Ligne 1 - 2 - 3 - 4 de l'article Texte : </p>
+									<input [(ngModel)]="newLineArticleDesc1" placeholder="Ligne 1 de la desc de la vidéo" type="text" class="validate">
+									<input [(ngModel)]="newLineArticleDesc2" placeholder="Ligne 2 de la desc de la vidéo" type="text" class="validate">
+									<input [(ngModel)]="newLineArticleDesc3" placeholder="Ligne 3 de la desc de la vidéo" type="text" class="validate">
+									<input [(ngModel)]="newLineArticleDesc4" placeholder="Ligne 4 de la desc de la vidéo" type="text" class="validate">
+								</div>
+
+
+
+								<div style="padding:15px 15px;">
+									<p>Ligne 1 - 2 - 3 - 4 de l'article Texte : </p>
+									<hr>
+									<input [(ngModel)]="linkDataVideos1" placeholder="Lien Source 1" type="text" class="validate">
+									<input [(ngModel)]="textDataVideos1" placeholder="Texte source 1" type="text" class="validate">
+									<hr>
+									<input [(ngModel)]="linkDataVideos2" placeholder="Lien Source 2" type="text" class="validate">
+									<input [(ngModel)]="textDataVideos2" placeholder="Texte source 2" type="text" class="validate">
+									<hr>
+									<input [(ngModel)]="linkDataVideos3" placeholder="Lien Source 3" type="text" class="validate">
+									<input [(ngModel)]="textDataVideos3" placeholder="Texte source 3" type="text" class="validate">
+									<hr>
+									<input [(ngModel)]="linkDataVideos4" placeholder="Lien Source 4" type="text" class="validate">
+									<input [(ngModel)]="textDataVideos4" placeholder="Texte source 4" type="text" class="validate">
+									<hr>
+									<input [(ngModel)]="linkDataVideos5" placeholder="Lien Source 5" type="text" class="validate">
+									<input [(ngModel)]="textDataVideos5" placeholder="Texte source 5" type="text" class="validate">
+								</div>
+
+							</div>
+						</div>
+						<div class="card-action">
+							<button (click)="createArticleFinal()" *ngIf="idVideo" class="btn waves-effect waves-light">
+								Envoyer en draft
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="col s6">
+			<div class="row">
+				<div class="col s12">
+					<div class="card blue-grey darken-1">
+						<div class="card-content white-text">
+							<span class="card-title">Infos Complète à trier de youtube</span>
+							<div class="row">
+								<div class="input-field col s12">
+									<p>Ne pas oublier d'activer le proxy de CORS</p>
+									<a href="https://cors-anywhere.herokuapp.com/corsdemo">Go click</a>
+									<hr>
+									<input [(ngModel)]="urlYoutube" placeholder="Lien Youtube" id="youtube_url" type="text" class="validate">
+									<hr>
+									<p><img [src]="imageThumbnail"></p>
+									<p><b>URL de l'image thumb : </b><br>{{ imageThumbnail }}</p>
+									<br>
+									<p><b>ID</b> : <br>{{ idVideo }}</p>
+									<br>
+									<p><b>Nom de la chaine : </b><br>{{ channelName }}</p>
+									<br>
+									<p><b>Nom de la vidéo : </b><br>{{ nameVideo }}</p>
+									<br>
+									<p><b>Liste des mots clés : </b><br>{{ listKeyWords }}</p>
+									<br>
+									<p><b>Description complète</b></p>
+									<p [innerHTML]="description"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
