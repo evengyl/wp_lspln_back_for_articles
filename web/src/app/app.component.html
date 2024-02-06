@@ -3,7 +3,9 @@
 		<div class="col s12">
 			<div class="card blue-grey darken-1">
 				<div class="card-content white-text">
-					<span class="card-title">Infos Complète à trier de youtube</span>
+					<p>Ne pas oublier d'activer le proxy de CORS</p>
+					<a class="btn waves-effect waves-light warning" href="https://cors-anywhere.herokuapp.com/corsdemo">Go click</a>
+					<hr>
 					<div class="row">
 						<button (click)="initAllDatas_YT_AND_WP()" class="btn waves-effect waves-light green">Charger Toutes les données de YT et WP</button>
 					</div>
@@ -89,7 +91,7 @@
 
 							</div>
 						</div>
-						<div class="card-action">
+						<div class="card-action" *ngIf="isAllDatasCharged">
 							<button (click)="createArticleFinal()" *ngIf="idVideo" class="btn waves-effect waves-light">
 								Envoyer en draft
 							</button>
@@ -109,9 +111,7 @@
 							<span class="card-title">Infos Complète à trier de youtube</span>
 							<div class="row">
 								<div class="input-field col s12">
-									<p>Ne pas oublier d'activer le proxy de CORS</p>
-									<a href="https://cors-anywhere.herokuapp.com/corsdemo">Go click</a>
-									<hr>
+									
 									<input [(ngModel)]="urlYoutube" placeholder="Lien Youtube" id="youtube_url" type="text" class="validate">
 									<hr>
 									<p><img [src]="imageThumbnail"></p>

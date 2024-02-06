@@ -50,6 +50,10 @@ export class AppComponent {
 	textDataVideos5 : string = "text test 1"
 
 	allDatasWithLink : string = ""
+
+
+	//composant state
+	isAllDatasCharged : boolean = false
  
 
 	constructor(private ytServe: YoutubeService, private wpServe: WpService) {
@@ -58,7 +62,7 @@ export class AppComponent {
 
 	async init(){
 		let bloc = await this.wpServe.getBlockArticleV3Compo(1453)
-		console.log(bloc.content.raw)
+		//console.log(bloc.content.raw)
 	}
 
 
@@ -109,6 +113,8 @@ export class AppComponent {
 
 		//partie pour le slug url de la vidéo
 		this.slug = (this.channelName + " " + this.nameVideo).replace(/[^a-zA-Z0-9]+/g, '-').replace(/-+$/, '').toLowerCase();
+
+		this.isAllDatasCharged = true
 	}
 
 
@@ -173,6 +179,8 @@ export class AppComponent {
 
 		// //mise a jour de l'image de feature
 		await this.wpServe.updateFeaturedImage(newArticleCreated.id, this.imageUploaded.id)
+
+
 
 		setTimeout(() => {
 		 	//location.reload()

@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
     "@types/puppeteer": "^7.0.4",
+    "axios": "^1.6.7",
     "puppeteer": "^21.10.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
