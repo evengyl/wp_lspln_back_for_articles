@@ -14,6 +14,7 @@
 		</div>
 		<div class="col s6">
 			<div class="row">
+				<p><img [src]="wpServe.imageTest"></p>
 
 				<div class="col s12">
 					<div class="card blue-grey darken-1">
@@ -30,7 +31,7 @@
 									</span>
 								</div>
 
-								<div style="padding:15px 15px;">
+								<!-- <div style="padding:15px 15px;">
 									<p>Liste des mots clés ajoutés dans l'article : </p>
 									<span style="padding:15px;" *ngFor="let tag of listTagAdded">
 										{{ tag.name }}
@@ -50,14 +51,14 @@
 									<span style="padding:15px;">
 										{{ this.slug}}
 									</span>
-								</div>
+								</div> -->
 
-								<div style="padding:15px 15px;">
+								<!-- <div style="padding:15px 15px;">
 									<p>Résumé de l'article : </p>
 									<span style="padding:15px;">
 										<input [(ngModel)]="resumeVideo" placeholder="Résumé de la vidéo" type="text" class="validate">
 									</span>
-								</div>
+								</div> -->
 
 
 								<div style="padding:15px 15px;">
@@ -73,20 +74,29 @@
 								<div style="padding:15px 15px;">
 									<p>Ligne 1 - 2 - 3 - 4 de l'article Texte : </p>
 									<hr>
-									<input [(ngModel)]="linkDataVideos1" placeholder="Lien Source 1" type="text" class="validate">
 									<input [(ngModel)]="textDataVideos1" placeholder="Texte source 1" type="text" class="validate">
+									<input [(ngModel)]="linkDataVideos1" placeholder="Lien Source 1" type="text" class="validate">
 									<hr>
-									<input [(ngModel)]="linkDataVideos2" placeholder="Lien Source 2" type="text" class="validate">
 									<input [(ngModel)]="textDataVideos2" placeholder="Texte source 2" type="text" class="validate">
+									<input [(ngModel)]="linkDataVideos2" placeholder="Lien Source 2" type="text" class="validate">
 									<hr>
-									<input [(ngModel)]="linkDataVideos3" placeholder="Lien Source 3" type="text" class="validate">
 									<input [(ngModel)]="textDataVideos3" placeholder="Texte source 3" type="text" class="validate">
+									<input [(ngModel)]="linkDataVideos3" placeholder="Lien Source 3" type="text" class="validate">
 									<hr>
-									<input [(ngModel)]="linkDataVideos4" placeholder="Lien Source 4" type="text" class="validate">
 									<input [(ngModel)]="textDataVideos4" placeholder="Texte source 4" type="text" class="validate">
+									<input [(ngModel)]="linkDataVideos4" placeholder="Lien Source 4" type="text" class="validate">
 									<hr>
-									<input [(ngModel)]="linkDataVideos5" placeholder="Lien Source 5" type="text" class="validate">
 									<input [(ngModel)]="textDataVideos5" placeholder="Texte source 5" type="text" class="validate">
+									<input [(ngModel)]="linkDataVideos5" placeholder="Lien Source 5" type="text" class="validate">
+									<hr>
+									<input [(ngModel)]="textDataVideos6" placeholder="Texte source 6" type="text" class="validate">
+									<input [(ngModel)]="linkDataVideos6" placeholder="Lien Source 6" type="text" class="validate">
+									<hr>
+									<input [(ngModel)]="textDataVideos7" placeholder="Texte source 7" type="text" class="validate">
+									<input [(ngModel)]="linkDataVideos7" placeholder="Lien Source 7" type="text" class="validate">
+									<hr>
+									<input [(ngModel)]="textDataVideos8" placeholder="Texte source 8" type="text" class="validate">
+									<input [(ngModel)]="linkDataVideos8" placeholder="Lien Source 8" type="text" class="validate">
 								</div>
 
 							</div>
@@ -115,7 +125,7 @@
 									<input [(ngModel)]="urlYoutube" placeholder="Lien Youtube" id="youtube_url" type="text" class="validate">
 									<hr>
 									<p><img [src]="imageThumbnail"></p>
-									<p><b>URL de l'image thumb : </b><br>{{ imageThumbnail }}</p>
+									<!-- <p><b>URL de l'image thumb : </b><br>{{ imageThumbnail }}</p>
 									<br>
 									<p><b>ID</b> : <br>{{ idVideo }}</p>
 									<br>
@@ -124,7 +134,7 @@
 									<p><b>Nom de la vidéo : </b><br>{{ nameVideo }}</p>
 									<br>
 									<p><b>Liste des mots clés : </b><br>{{ listKeyWords }}</p>
-									<br>
+									<br> -->
 									<p><b>Description complète</b></p>
 									<p [innerHTML]="description"></p>
 								</div>

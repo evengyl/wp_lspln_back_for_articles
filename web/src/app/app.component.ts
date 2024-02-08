@@ -9,7 +9,7 @@ import { WpService } from './wp.service';
 })
 export class AppComponent {
 
-	urlYoutube: string = "https://www.youtube.com/watch?v=iQLfyx0-v84"
+	urlYoutube: string = ""
 
 
 	channelName: string = ""
@@ -30,24 +30,31 @@ export class AppComponent {
 	resumeVideo : string = ""
 	slug : string = ""
 	imageUploaded : any
+	bannerUrl : string = ""
 
-	newLineArticleDesc1 : string = "ligne 1"
-	newLineArticleDesc2 : string = "ligne 2"
-	newLineArticleDesc3 : string = "ligne 3"
-	newLineArticleDesc4 : string = "ligne 4"
+	newLineArticleDesc1 : string = ""
+	newLineArticleDesc2 : string = ""
+	newLineArticleDesc3 : string = ""
+	newLineArticleDesc4 : string = ""
 
 
-	linkDataVideos1 : string = "link test 1"
-	linkDataVideos2 : string = "link test 1"
-	linkDataVideos3 : string = "link test 1"
-	linkDataVideos4 : string = "link test 1"
-	linkDataVideos5 : string = "link test 1"
+	linkDataVideos1 : string = ""
+	linkDataVideos2 : string = ""
+	linkDataVideos3 : string = ""
+	linkDataVideos4 : string = ""
+	linkDataVideos5 : string = ""
+	linkDataVideos6 : string = ""
+	linkDataVideos7 : string = ""
+	linkDataVideos8 : string = ""
 
-	textDataVideos1 : string = "text test 1"
-	textDataVideos2 : string = "text test 1"
-	textDataVideos3 : string = "text test 1"
-	textDataVideos4 : string = "text test 1"
-	textDataVideos5 : string = "text test 1"
+	textDataVideos1 : string = ""
+	textDataVideos2 : string = ""
+	textDataVideos3 : string = ""
+	textDataVideos4 : string = ""
+	textDataVideos5 : string = ""
+	textDataVideos6 : string = ""
+	textDataVideos7 : string = ""
+	textDataVideos8 : string = ""
 
 	allDatasWithLink : string = ""
 
@@ -56,14 +63,16 @@ export class AppComponent {
 	isAllDatasCharged : boolean = false
  
 
-	constructor(private ytServe: YoutubeService, private wpServe: WpService) {
+	constructor(private ytServe: YoutubeService,public wpServe: WpService) {
 		this.init()
 	}
 
 	async init(){
-		let bloc = await this.wpServe.getBlockArticleV3Compo(1453)
-		//console.log(bloc.content.raw)
+		// let res = await this.wpServe.getAllBlockCompo()
+		// res = await this.wpServe.getBlockArticleV3Compo(1453)
+		// console.log(res)
 	}
+
 
 
 	async initAllDatas_YT_AND_WP() {
@@ -96,6 +105,8 @@ export class AppComponent {
 
 		//partie pour upload l'image de la vidéo 
 		this.imageUploaded = await this.wpServe.uploadMediaImageThumbnails(this.imageThumbnail, this.nameVideo, this.slug)
+		console.log(this.imageThumbnail)
+		console.log(this.imageUploaded)
 
 		//il faut créer les nouveaux tag pour pouvoir les ajouter à la listes de l'article car il travaille avec les ID des tags
 		await this.wpServe.createTagsKeyWord(this.listKeyWords)
@@ -113,6 +124,10 @@ export class AppComponent {
 
 		//partie pour le slug url de la vidéo
 		this.slug = (this.channelName + " " + this.nameVideo).replace(/[^a-zA-Z0-9]+/g, '-').replace(/-+$/, '').toLowerCase();
+
+		console.log(this.channelName)
+		this.bannerUrl = await this.wpServe.getBannerForPost(this.channelName)
+        console.log(this.bannerUrl)
 
 		this.isAllDatasCharged = true
 	}
@@ -140,9 +155,11 @@ export class AppComponent {
 			{ link :this.linkDataVideos3 , text : this.textDataVideos3 },
 			{ link :this.linkDataVideos4 , text : this.textDataVideos4 },
 			{ link :this.linkDataVideos5 , text : this.textDataVideos5 },
+			{ link :this.linkDataVideos6 , text : this.textDataVideos6 },
+			{ link :this.linkDataVideos7 , text : this.textDataVideos7 },
+			{ link :this.linkDataVideos8 , text : this.textDataVideos8 },
 		]
 		this.allDatasWithLink =  await this.wpServe.manipulationLinkVideos(allLinks)
-
 
 		//partie principale : manipulation du bloc beta article v3 pour le remplir
 		this.blockCompletArticleFinal = await this.wpServe.manipulateContentBrut(this.blockCompletArticle.content.raw, {
@@ -156,6 +173,7 @@ export class AppComponent {
 			],
 			allDatasWithLink : this.allDatasWithLink,
 			url : this.urlYoutube,
+			bannerUrl : this.bannerUrl
 		})
 
 
@@ -166,16 +184,17 @@ export class AppComponent {
 			title: this.nameVideo,
 			categories: this.selectedCategories,
 			tags: this.listTagAddedIDS,
-			excerpt: this.resumeVideo,
+			excerpt: this.newLineArticleDesc1,
 			slug: this.slug,
-			content : this.blockCompletArticleFinal
+			content : this.blockCompletArticleFinal,
+			status : "publish"
 		}
 		
 		// //Call the createPost method from the WordPress instance and log the result
 		let newArticleCreated = await this.wpServe.createPost(post) 
 
 		
-		setTimeout(() => {}, 250);
+		setTimeout(() => {}, 150);
 
 		// //mise a jour de l'image de feature
 		await this.wpServe.updateFeaturedImage(newArticleCreated.id, this.imageUploaded.id)
@@ -183,7 +202,7 @@ export class AppComponent {
 
 
 		setTimeout(() => {
-		 	//location.reload()
+		 	location.reload()
 		}, 500);
 
 	}
