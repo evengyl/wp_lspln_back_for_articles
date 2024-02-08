@@ -65,6 +65,8 @@ export class AppComponent {
 
 	constructor(private ytServe: YoutubeService,public wpServe: WpService) {
 		this.init()
+
+		//this.ytServe.getDataFromBackendExpress(this.urlYoutube)
 	}
 
 	async init(){

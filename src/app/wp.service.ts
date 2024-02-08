@@ -12,8 +12,10 @@ export class WpService {
     url : string = ""
     headers :any = {}
 
+    urlProxy : string = ""
     //urlProxy : string = "https://cors-anywhere.herokuapp.com/"
-    urlProxy : string = "https://corsproxy.io/?"
+    //urlProxy : string = "https://corsproxy.io/?"
+    //urlProxy : string = "https://crossorigin.me/"
 
     imageTest : any
 
@@ -36,8 +38,12 @@ export class WpService {
                 
         // Create the headers object with the authorization and content-type headers
         this.headers = {
+            withCredentials: true,
         Authorization: "Basic " + btoa(`${wpConfig.username}:${wpConfig.password}`),
         "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Allow-Methods': '*'
         };
     }
 
